@@ -3,7 +3,6 @@ package dev.kaden
 import cats.effect.IOApp
 import cats.effect.IO
 import dev.kaden.Entities.*
-import dev.kaden.Entities.Section.*
 
 object Main extends IOApp.Simple {
 
@@ -12,6 +11,7 @@ object Main extends IOApp.Simple {
   val kadenResume = Resume(
     Header(
       "Kaden Taylor",
+      "I like building things, solving problems, and building things that solve problems.",
       ContactInfo(
         PhoneNumber(480, 734, 8791),
         EmailAddress("kadenjtaylor", "gmail.com")
@@ -22,23 +22,23 @@ object Main extends IOApp.Simple {
       Workplace(
         "Amadeus Revenue Integrity",
         "Flight firming stuff",
-        Job("Software R&D Intern", "Fun research stuff"),
+        Job("Software R+D Intern", "Fun research stuff"),
         Job("Software Engineer", "Domin Model Sculpting")
       ),
       Workplace(
         "Usercare Inc.",
-        "Whatever Fred wanted",
+        "Startup in Tucson, Arizona",
         Job("Agent.AI - Software Engineer", "Chatbot as a Service"),
         Job("Fly.me - Software Engineer", "Online Travel Agency")
       ),
       Workplace(
         "Google",
         "Member of the Android Messages Team",
-        Job("Software Engineer", "Worked on a big, old, app.")
+        Job("Software Engineer", "Worked on an Android App")
       ),
       Workplace(
         "Academia.edu",
-        "An older-than-you-expect startup with an equally old codebase",
+        "Experiment in short-form publishing: Academia Letters",
         Job("Software Engineer", "Did some Ruby on Rails and some JS")
       ),
       Workplace(

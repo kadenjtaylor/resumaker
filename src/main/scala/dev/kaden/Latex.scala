@@ -33,13 +33,49 @@ object Latex {
     }
   } yield ()
 
+  private val documentClass = raw"\documentclass{article}"
+  private val documentBegin = raw"\begin{document}"
+  private val documentEnd = raw"\end{document}"
+  private val horizLine = raw"\noindent\rule{\linewidth}{1pt}"
+  private val newline = raw"\newline"
+
+  private def section(name: String) = raw"""\section*{$name}"""
+
+  private def formatExperience(workplaces: Seq[Workplace]): String = s"$workplaces"
+
+  private def formatEducation(certifcations: Seq[EducationRecord]): String = s"$certifcations"
+
   def convertToLatex(resume: Resume): IO[String] = IO {
-    // TODO: Implement actual conversion logic
-    """\documentclass{article}
-    |\begin{document}
-    |First document. This is a simple example, with no 
-    |extra parameters or packages included.
-    |\end{document}
+    s"""|$documentClass
+        |
+        |$documentBegin
+        |
+        |${section(resume.header.name)}
+        |
+        |${resume.header.tagline}
+        |$newline
+        |
+        |${resume.header.location}
+        |
+        |${resume.header.contactInfo.email}
+        |
+        |${resume.header.contactInfo.phoneNumber}
+        |
+        |$horizLine
+        |
+        |${section("Experience")}
+        |
+        |${formatExperience(resume.experience.workplaces)}
+        |
+        |$horizLine
+        |
+        |${section("Education")}
+        |
+        |${formatEducation(resume.education.certifcations)}
+        |
+        |$horizLine
+        |
+        |$documentEnd
     """.stripMargin
   }
 

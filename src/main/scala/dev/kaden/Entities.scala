@@ -18,7 +18,7 @@ object Entities {
     override def toString(): String = s"$city, ${state.name}"
   }
 
-  case class Header(name: String, contactInfo: ContactInfo, location: Location)
+  case class Header(name: String, tagline: String, contactInfo: ContactInfo, location: Location)
 
   enum Skill:
     case Hard(name: String)
@@ -39,10 +39,8 @@ object Entities {
 
   case class Element(content: String)
 
-  enum Section:
-    case Experience(workplaces: Workplace*)
-    case Education(educations: EducationRecord*)
-    case Misc(title: String, elements: Element)
+  case class Experience(workplaces: Workplace*)
+  case class Education(certifcations: EducationRecord*)
 
-  case class Resume(header: Header, sections: Section*)
+  case class Resume(header: Header, experience: Experience, education: Education)
 }
