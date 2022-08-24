@@ -41,9 +41,15 @@ object Latex {
 
   private def section(name: String) = raw"""\section*{$name}"""
 
-  private def formatExperience(workplaces: Seq[Workplace]): String = s"$workplaces"
+  private def formatWorkplace(w: Workplace): String = s"$w"
 
-  private def formatEducation(certifcations: Seq[EducationRecord]): String = s"$certifcations"
+  private def formatExperience(workplaces: Seq[Workplace]): String =
+    workplaces.mkString(newline + "\n" + newline + "\n")
+
+  private def formatCert(rec: EducationRecord): String = s"$rec"
+
+  private def formatEducation(certifcations: Seq[EducationRecord]): String =
+    certifcations.mkString(newline + "\n" + newline + "\n")
 
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
