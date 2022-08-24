@@ -38,6 +38,13 @@ object Latex {
   private val documentEnd = raw"\end{document}"
   private val horizLine = raw"\noindent\rule{\linewidth}{1pt}"
   private val newline = raw"\newline"
+  private val importGeo = raw"\usepackage{geometry}"
+  private val setGeometry = raw"""\geometry{
+ |  a4paper,
+ |  total={170mm,257mm},
+ |  left=20mm,
+ |  top=20mm,
+ |}""".stripMargin
 
   private def section(name: String) = raw"""\section*{$name}"""
 
@@ -53,6 +60,10 @@ object Latex {
 
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
+        |
+        |$importGeo
+        |
+        |$setGeometry
         |
         |$documentBegin
         |
