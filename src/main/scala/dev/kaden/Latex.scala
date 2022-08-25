@@ -139,9 +139,8 @@ object Latex {
 
     private def locationContactBanner(h: Header) =
       raw"""${bold("Location:")} ${h.location} /
-      ${bold("Email:")} ${h.contactInfo.email} /
-      ${bold("Phone:")} ${h.contactInfo.phoneNumber}
-      """
+      |${bold("Email:")} ${h.contactInfo.email} /
+      |${bold("Phone:")} ${h.contactInfo.phoneNumber}"""
 
     private def formatHeader(h: Header) = {
       raw"""${section(h.name)}
@@ -167,7 +166,7 @@ object Latex {
       "\n" + beginList + "\n" + xs
         .map(formatter)
         .map(itemOf)
-        .mkString("\n") + "\n" + endList + "\n"
+        .mkString("\n") + "\n" + endList
     }
   }
 }
