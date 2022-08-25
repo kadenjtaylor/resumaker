@@ -6,6 +6,8 @@ import scala.sys.process.*
 import java.io.File
 import java.io.BufferedWriter
 import java.io.FileWriter
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 object Latex {
 
@@ -63,6 +65,8 @@ object Latex {
         |$importHyper
         |$configureHyper
         |$documentBegin
+        |$setIndent
+        |$setParSkip
         |${formatHeader(resume.header)}
         |$horizLine
         |${section("Experience")}
@@ -74,12 +78,16 @@ object Latex {
         |${section("Extras")}
         |${listOf(resume.extras.elements, formatExtraElement)}
         |$vPad
-        |${centered(italics(formatCreatedBy(resume.metadata.createdByLink)))}
+        |${formatCreationDate(resume.metadata)}
+        |
+        |${formatCreationLink(resume.metadata)}
         |$documentEnd
     """.stripMargin
     }
 
     private val plainPage     = raw"\pagestyle{empty}"
+    private val setIndent     = raw"\setlength{\parindent}{0pt}"
+    private val setParSkip    = raw"\setlength{\parskip}{0pt}"
     private val documentClass = raw"\documentclass{article}"
     private val documentBegin = raw"\begin{document}"
     private val documentEnd   = raw"\end{document}"
@@ -96,10 +104,10 @@ object Latex {
     private val importHyper = raw"\usepackage{hyperref}"
     private val configureHyper = raw"""\hypersetup{
       |   colorlinks=true,
-      |   linkcolor=blue,
-      |   filecolor=magenta,      
+      |   linkcolor=blue,   
       |   urlcolor=blue,
       |   pdfpagemode=FullScreen,
+      |   pdfauthor = Kaden Taylor
       |}"""
 
     private def beginList              = raw"\begin{itemize}"
@@ -131,19 +139,30 @@ object Latex {
         }
         .mkString(" ")
 
+    private def locationContactBanner(h: Header) =
+      raw"""${bold("Location:")} ${h.location} /
+      ${bold("Email:")} ${h.contactInfo.email} /
+      ${bold("Phone:")} ${h.contactInfo.phoneNumber}
+      """
+
     private def formatHeader(h: Header) = {
       raw"""${section(h.name)}
-        |${h.tagline}
+        |${italics(h.tagline)}
         |$newline
         |
-        |${bold("Location:")} ${h.location} /
-          ${bold("Email:")} ${h.contactInfo.email} /
-          ${bold("Phone:")} ${h.contactInfo.phoneNumber}
-      |$newline"""
+        |${centered(locationContactBanner(h))}"""
     }
 
-    private def formatCreatedBy(link: String): String =
-      raw"Created via: ${url(link)}"
+    private def formatCreationDate(f: Footer): String = {
+      val formattedDate = f.creationDate.format(
+        DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
+      )
+      raw"Generated on ${italics(formattedDate)}"
+    }
+
+    private def formatCreationLink(f: Footer): String = {
+      raw"via: ${url(f.createdByLink)}"
+    }
 
     private def listOf[X](xs: Seq[X], formatter: X => String) = {
       "\n" + beginList + "\n" + xs

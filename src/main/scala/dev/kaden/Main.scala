@@ -96,7 +96,7 @@ object Main extends IOApp.Simple {
         "Got fed up with using Indeed's autoformatted resume so I wrote some Scala code to generate the required LaTeX instead"
       )
     ),
-    Metadata("https://github.com/kadenjtaylor/resumaker")
+    Footer("https://github.com/kadenjtaylor/resumaker", LocalDate.now())
   )
 
 }

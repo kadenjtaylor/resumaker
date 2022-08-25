@@ -57,13 +57,13 @@ object Entities {
   case class Experience(workplaces: Workplace*)
   case class Education(certifcations: EducationRecord*)
   case class Extras(elements: Element*)
-  case class Metadata(createdByLink: String)
+  case class Footer(createdByLink: String, creationDate: LocalDate)
 
   case class Resume(
       header: Header,
       experience: Experience,
       education: Education,
       extras: Extras,
-      metadata: Metadata
+      metadata: Footer
   )
 }
