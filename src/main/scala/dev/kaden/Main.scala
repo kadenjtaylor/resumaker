@@ -27,7 +27,7 @@ object Main extends IOApp.Simple {
         Job(
           "Software Engineer",
           "Member of the Platform Team",
-          "Scala (cats-effect/Zio)",
+          "Scala (Cats-Effect, ZIO, HTTP4s, doobie)",
           "Kubernetes",
           "Docker"
         )
@@ -40,7 +40,7 @@ object Main extends IOApp.Simple {
       ),
       Workplace(
         "Google",
-        "Member of the Android Messages Team",
+        "Android Messages Team",
         Tenure(LocalDate.of(2019, 10, 1), LocalDate.of(2020, 11, 1)),
         Job("Software Engineer", "Client-Side - Android Messages App", "Java", "Blaze")
       ),

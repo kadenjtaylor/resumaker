@@ -15,121 +15,98 @@ object Latex {
       filename: String = "resume"
   ): IO[Unit] = for {
     texFileName <- IO.pure(s"$directoryName$filename.tex")
-    _ <- IO.println("Converting to LaTeX...")
-    latext <- convertToLatex(resume)
-    _ <- IO.println(s"Ensuring directory $directoryName exists...")
-    _ <- createDirectoryIfNeeded(directoryName)
-    _ <- IO.println(s"Writing LaTeX content to `$texFileName`...")
-    _ <- writeLatexFile(texFileName, latext)
-    _ <- IO.println("Invoking LaTeX...")
-    response <- invokeLatexOn(directoryName, texFileName).attempt
+    _           <- log("Converting to LaTeX...")
+    latext      <- convertToLatex(resume)
+    _           <- log(s"Ensuring directory $directoryName exists...")
+    _           <- createDirectoryIfNeeded(directoryName)
+    _           <- log(s"Writing LaTeX content to `$texFileName`...")
+    _           <- writeLatexFile(texFileName, latext)
+    _           <- log("Invoking LaTeX...")
+    response    <- invokeLatexOn(directoryName, texFileName).attempt
     _ <- response match {
-      case Left(err) =>
-        IO.println(
-          s"Encountered error in compiling LaTex - see $directoryName$filename.log for details"
-        )
-      case Right(_) =>
-        IO.println(s"Success! Your PDF should be located at: $directoryName$filename.pdf")
+      case Left(err) => reportError(directoryName, filename)
+      case Right(_)  => reportSuccess(directoryName, filename)
     }
   } yield ()
 
-  private val plainPage = raw"\pagestyle{empty}"
+  private def reportError(directoryName: String, filename: String): IO[Unit] =
+    log(s"Encountered error in compiling LaTex - see $directoryName$filename.log for details")
+
+  private def reportSuccess(directoryName: String, filename: String): IO[Unit] =
+    log(s"Success! Your PDF should be located at: $directoryName$filename.pdf")
+
+  private def log(s: String): IO[Unit] = IO.println(s)
+
+  private val plainPage     = raw"\pagestyle{empty}"
   private val documentClass = raw"\documentclass{article}"
   private val documentBegin = raw"\begin{document}"
-  private val documentEnd = raw"\end{document}"
-  private val horizLine = raw"\noindent\rule{\linewidth}{1pt}"
-  private val newline = raw"\newline"
-  private val importGeo = raw"\usepackage{geometry}"
+  private val documentEnd   = raw"\end{document}"
+  private val horizLine     = raw"\noindent\rule{\linewidth}{1pt}" + "\n"
+  private val newline       = raw"\newline"
+  private val vPad          = raw"\vspace*{\fill}"
+  private val importGeo     = raw"\usepackage{geometry}"
   private val setGeometry = raw"""\geometry{
  |  a4paper,
  |  total={160mm,267mm},
  |  left=25mm,
  |  top=20mm,
  |}""".stripMargin
-  private val vPad = raw"\vspace*{\fill}"
 
+  private def beginList       = raw"\begin{itemize}"
   private def itemOf[S](s: S) = raw"\item $s"
-  private def beginList = raw"\begin{itemize}"
-  private def endList = raw"\end{itemize}"
+  private def endList         = raw"\end{itemize}"
 
   private def centered(text: String) = raw"\centering{$text}"
-  private def bold(text: String) = raw"\textbf{$text}"
-  private def italics(text: String) = raw"\textit{$text}"
-  private def section(name: String) = raw"""\section*{$name}"""
+  private def bold(text: String)     = raw"\textbf{$text}"
+  private def italics(text: String)  = raw"\textit{$text}"
+  private def section(name: String)  = raw"\section*{$name}"
 
   private def formatJob(j: Job): String =
     s"${bold(j.title)} - ${j.description}" +
       s"$newline ${italics(j.skills.mkString(", "))}"
 
-  private def formatJobs(jobs: Seq[Job]): String =
-    beginList + jobs
-      .map(formatJob)
-      .map(itemOf)
-      .mkString("\n") + endList
-
   private def formatWorkplace(w: Workplace): String =
-    s"""${bold(w.name)} {${w.tenure}}: ${w.blurb} ${formatJobs(w.jobs)}"""
-
-  private def formatExperience(workplaces: Seq[Workplace]): String =
-    beginList +
-      workplaces
-        .map(formatWorkplace)
-        .map(itemOf)
-        .mkString("\n") + endList
+    s"""${bold(w.name)} {${w.tenure}}: ${w.blurb} ${format(w.jobs, formatJob)}"""
 
   private def formatCert(rec: EducationRecord): String =
     s"${bold(rec.instituion)} - ${rec.awarded}: ${rec.proof}"
 
-  private def formatEducation(certifcations: Seq[EducationRecord]): String =
-    beginList + certifcations
-      .map(formatCert)
-      .map(itemOf)
-      .mkString("\n") + endList
+  private def formatHeader(h: Header) = {
+    raw"""${section(h.name)}
+        |${h.tagline}
+        |$newline
+        |
+        |${bold("Location:")} ${h.location} /  ${bold("Email:")} ${h.contactInfo.email} / ${bold(
+        "Phone:"
+      )} ${h.contactInfo.phoneNumber}
+      |$newline"""
+  }
 
-  private def formatExtras(extras: Seq[Element]): String =
-    beginList + extras
-      .map(_.content)
+  private def format[X](xs: Seq[X], formatter: X => String) = {
+    "\n" + beginList + "\n" + xs
+      .map(formatter)
       .map(itemOf)
-      .mkString("\n") + endList
+      .mkString("\n") + "\n" + endList + "\n"
+  }
 
-  def convertToLatex(resume: Resume): IO[String] = IO {
+  private def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
         |$plainPage
         |$importGeo
         |$setGeometry
         |$documentBegin
-        |${section(resume.header.name)}
-        |${resume.header.tagline}
-        |$newline
-        |
-        |${bold("Location:")} ${resume.header.location} /  ${bold(
-         "Email:"
-       )} ${resume.header.contactInfo.email} / ${bold(
-         "Phone:"
-       )} ${resume.header.contactInfo.phoneNumber}
-        |
+        |${formatHeader(resume.header)}
         |$horizLine
-        |
         |${section("Experience")}
-        |
-        |${formatExperience(resume.experience.workplaces)}
-        |
+        |${format(resume.experience.workplaces, formatWorkplace)}
         |$horizLine
-        |
         |${section("Education")}
-        |
-        |${formatEducation(resume.education.certifcations)}
-        |
+        |${format(resume.education.certifcations, formatCert)}
         |$horizLine
-        |
         |${section("Extras")}
-        |
-        |${formatExtras(resume.extras.elements)}
-        |
+        |${format(resume.extras.elements, _.content)}
         |$vPad
-        |
         |${centered(italics(resume.metadata.attribution))}
-        |
         |$documentEnd
     """.stripMargin
   }
@@ -150,7 +127,7 @@ object Latex {
     bw.close()
   }
 
-  private def invokeLatexOn(directory: String, filename: String): IO[Unit] = IO {
+  private def invokeLatexOn(directory: String, filename: String): IO[String] = IO {
     s"latex -halt-on-error -output-directory=$directory -output-format=pdf $filename".!!
   }
 }
