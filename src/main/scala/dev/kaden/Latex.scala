@@ -65,8 +65,6 @@ object Latex {
         |$importHyper
         |$configureHyper
         |$documentBegin
-        |$setIndent
-        |$setParSkip
         |${formatHeader(resume.header)}
         |$horizLine
         |${section("Experience")}
@@ -116,7 +114,7 @@ object Latex {
     private def centered(text: String) = raw"\centering{$text}"
     private def bold(text: String)     = raw"\textbf{$text}"
     private def italics(text: String)  = raw"\textit{$text}"
-    private def section(name: String)  = raw"\section*{$name}"
+    private def section(name: String)  = raw"\raggedright{\section*{$name}}"
     private def link(text: String, url: String) =
       raw"\href{$url}{$text}"
     private def url(url: String) = raw"\url{$url}"
@@ -149,19 +147,20 @@ object Latex {
       raw"""${section(h.name)}
         |${italics(h.tagline)}
         |$newline
-        |
-        |${centered(locationContactBanner(h))}"""
+        |\begin{center}
+        |${locationContactBanner(h)}
+        |\end{center}"""
     }
 
     private def formatCreationDate(f: Footer): String = {
       val formattedDate = f.creationDate.format(
         DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
       )
-      raw"Generated on ${italics(formattedDate)}"
+      raw"Generated on ${centered(italics(formattedDate))} via:"
     }
 
     private def formatCreationLink(f: Footer): String = {
-      raw"via: ${url(f.createdByLink)}"
+      raw"${centered(url(f.createdByLink))}"
     }
 
     private def listOf[X](xs: Seq[X], formatter: X => String) = {
