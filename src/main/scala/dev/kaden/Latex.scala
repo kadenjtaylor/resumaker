@@ -80,6 +80,10 @@ object Latex {
       .map(itemOf)
       .mkString(newline + "\n" + newline + "\n") + endList
 
+  private def centered(text: String) = raw"\centering{$text}"
+
+  private val vPad = raw"\vspace*{\fill}"
+
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
         |
@@ -119,6 +123,10 @@ object Latex {
         |${section("Extras")}
         |
         |${formatExtras(resume.extras.elements)}
+        |
+        |$vPad
+        |
+        |${centered(resume.metadata.attribution)}
         |
         |$documentEnd
     """.stripMargin

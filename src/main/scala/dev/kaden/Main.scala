@@ -61,7 +61,8 @@ object Main extends IOApp.Simple {
     ),
     Extras(
       Element("Runner-up on The FOX network gameshow, `Superhuman`")
-    )
+    ),
+    Metadata("Created via: https://github.com/kadenjtaylor/resumaker")
   )
 
 }

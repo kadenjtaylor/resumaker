@@ -42,6 +42,13 @@ object Entities {
   case class Experience(workplaces: Workplace*)
   case class Education(certifcations: EducationRecord*)
   case class Extras(elements: Element*)
+  case class Metadata(attribution: String)
 
-  case class Resume(header: Header, experience: Experience, education: Education, extras: Extras)
+  case class Resume(
+      header: Header,
+      experience: Experience,
+      education: Education,
+      extras: Extras,
+      metadata: Metadata
+  )
 }
