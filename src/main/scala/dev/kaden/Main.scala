@@ -20,21 +20,9 @@ object Main extends IOApp.Simple {
     ),
     Experience(
       Workplace(
-        "Amadeus Revenue Integrity",
-        "Flight firming stuff",
-        Job("Software R+D Intern", "Fun research stuff"),
-        Job("Software Engineer", "Domin Model Sculpting")
-      ),
-      Workplace(
-        "Usercare Inc.",
-        "Startup in Tucson, Arizona",
-        Job("Agent.AI - Software Engineer", "Chatbot as a Service"),
-        Job("Fly.me - Software Engineer", "Online Travel Agency")
-      ),
-      Workplace(
-        "Google",
-        "Member of the Android Messages Team",
-        Job("Software Engineer", "Worked on an Android App")
+        "Axoni",
+        "Fin-tech startup specializing in 'Distributed Ledger Technology'",
+        Job("Software Engineer", "Member of the Platform Team")
       ),
       Workplace(
         "Academia.edu",
@@ -42,14 +30,37 @@ object Main extends IOApp.Simple {
         Job("Software Engineer", "Did some Ruby on Rails and some JS")
       ),
       Workplace(
-        "Axoni",
-        "Fin-tech startup specializing in 'Distributed Ledger Technology'",
-        Job("Software Engineer", "Member of the Platform Team")
+        "Google",
+        "Member of the Android Messages Team",
+        Job("Software Engineer", "Worked on an Android App")
+      ),
+      Workplace(
+        "Usercare Inc",
+        "Startup in Tucson, Arizona",
+        Job("Agent.AI - Software Engineer", "Chatbot as a Service"),
+        Job("Fly.me - Software Engineer", "Online Travel Agency")
+      ),
+      Workplace(
+        "Amadeus Revenue Integrity",
+        "Various Flight-Firming Products",
+        Job("Software R+D Intern", "Fun research stuff"),
+        Job("Software Engineer", "Domin Model Sculpting")
       )
     ),
     Education(
-      EducationRecord("University of Arizona", 2016, ProofOfEducation.Degree),
-      EducationRecord("Gilbert High School", 2012, ProofOfEducation.Diploma)
+      EducationRecord(
+        "University of Arizona",
+        2016,
+        ProofOfEducation.Degree("Computer Science - B.S.")
+      ),
+      EducationRecord(
+        "Gilbert High School",
+        2012,
+        ProofOfEducation.Diploma
+      )
+    ),
+    Extras(
+      Element("Runner-up on The FOX network gameshow, `Superhuman`")
     )
   )
 

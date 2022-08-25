@@ -32,7 +32,7 @@ object Entities {
 
   enum ProofOfEducation:
     case Diploma
-    case Degree
+    case Degree(areaOfStudy: String)
     case Certification
 
   case class EducationRecord(instituion: String, awarded: Year, proof: ProofOfEducation)
@@ -41,6 +41,7 @@ object Entities {
 
   case class Experience(workplaces: Workplace*)
   case class Education(certifcations: EducationRecord*)
+  case class Extras(elements: Element*)
 
-  case class Resume(header: Header, experience: Experience, education: Education)
+  case class Resume(header: Header, experience: Experience, education: Education, extras: Extras)
 }

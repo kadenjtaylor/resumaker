@@ -33,6 +33,7 @@ object Latex {
     }
   } yield ()
 
+  private val plainPage = raw"\pagestyle{empty}"
   private val documentClass = raw"\documentclass{article}"
   private val documentBegin = raw"\begin{document}"
   private val documentEnd = raw"\end{document}"
@@ -46,20 +47,43 @@ object Latex {
  |  top=20mm,
  |}""".stripMargin
 
+  private def itemOf[S](s: S) = raw"\item $s"
+  private def beginList = raw"\begin{itemize}"
+  private def endList = raw"\end{itemize}"
+
+  private def bold(text: String) = raw"\textbf{$text}"
+
   private def section(name: String) = raw"""\section*{$name}"""
 
-  private def formatWorkplace(w: Workplace): String = s"$w"
+  private def formatWorkplace(w: Workplace): String =
+    s"""${bold(w.name)}: ${w.blurb} $newline ${w.jobs}"""
 
   private def formatExperience(workplaces: Seq[Workplace]): String =
-    workplaces.mkString(newline + "\n" + newline + "\n")
+    beginList +
+      workplaces
+        .map(formatWorkplace)
+        .map(itemOf)
+        .mkString("\n" + newline + "\n" + newline) + endList
 
-  private def formatCert(rec: EducationRecord): String = s"$rec"
+  private def formatCert(rec: EducationRecord): String =
+    s"${bold(rec.instituion)} - ${rec.awarded}: ${rec.proof}"
 
   private def formatEducation(certifcations: Seq[EducationRecord]): String =
-    certifcations.mkString(newline + "\n" + newline + "\n")
+    beginList + certifcations
+      .map(formatCert)
+      .map(itemOf)
+      .mkString(newline + "\n" + newline + "\n") + endList
+
+  private def formatExtras(extras: Seq[Element]): String =
+    beginList + extras
+      .map(_.content)
+      .map(itemOf)
+      .mkString(newline + "\n" + newline + "\n") + endList
 
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
+        |
+        |$plainPage
         |
         |$importGeo
         |
@@ -91,6 +115,10 @@ object Latex {
         |${formatEducation(resume.education.certifcations)}
         |
         |$horizLine
+        |
+        |${section("Extras")}
+        |
+        |${formatExtras(resume.extras.elements)}
         |
         |$documentEnd
     """.stripMargin
