@@ -20,11 +20,7 @@ object Entities {
 
   case class Header(name: String, tagline: String, contactInfo: ContactInfo, location: Location)
 
-  enum Skill:
-    case Hard(name: String)
-    case Soft(name: String)
-
-  case class Job(title: String, description: String, skills: Skill*)
+  case class Job(title: String, description: String, skills: String*)
 
   case class Workplace(name: String, blurb: String, jobs: Job*)
 

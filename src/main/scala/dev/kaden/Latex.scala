@@ -42,21 +42,24 @@ object Latex {
   private val importGeo = raw"\usepackage{geometry}"
   private val setGeometry = raw"""\geometry{
  |  a4paper,
- |  total={170mm,257mm},
- |  left=20mm,
+ |  total={160mm,267mm},
+ |  left=25mm,
  |  top=20mm,
  |}""".stripMargin
+  private val vPad = raw"\vspace*{\fill}"
 
   private def itemOf[S](s: S) = raw"\item $s"
   private def beginList = raw"\begin{itemize}"
   private def endList = raw"\end{itemize}"
 
+  private def centered(text: String) = raw"\centering{$text}"
   private def bold(text: String) = raw"\textbf{$text}"
-
+  private def italics(text: String) = raw"\textit{$text}"
   private def section(name: String) = raw"""\section*{$name}"""
 
   private def formatJob(j: Job): String =
-    s"${j.title} - ${j.description}"
+    s"${bold(j.title)} - ${j.description}" +
+      s"$newline ${italics(j.skills.mkString(", "))}"
 
   private def formatJobs(jobs: Seq[Job]): String =
     beginList + jobs
@@ -88,10 +91,6 @@ object Latex {
       .map(_.content)
       .map(itemOf)
       .mkString("\n") + endList
-
-  private def centered(text: String) = raw"\centering{$text}"
-
-  private val vPad = raw"\vspace*{\fill}"
 
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
@@ -129,7 +128,7 @@ object Latex {
         |
         |$vPad
         |
-        |${centered(resume.metadata.attribution)}
+        |${centered(italics(resume.metadata.attribution))}
         |
         |$documentEnd
     """.stripMargin
