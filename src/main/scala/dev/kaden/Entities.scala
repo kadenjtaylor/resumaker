@@ -50,7 +50,9 @@ object Entities {
       proof: ProofOfEducation
   )
 
-  case class Element(content: String)
+  case class Link(text: String, link: String)
+  type ContentChunk = String | Link
+  case class Element(contentChunks: ContentChunk*)
 
   case class Experience(workplaces: Workplace*)
   case class Education(certifcations: EducationRecord*)

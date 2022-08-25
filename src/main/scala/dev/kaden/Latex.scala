@@ -72,7 +72,7 @@ object Latex {
         |${listOf(resume.education.certifcations, formatCert)}
         |$horizLine
         |${section("Extras")}
-        |${listOf(resume.extras.elements, _.content)}
+        |${listOf(resume.extras.elements, formatExtraElement)}
         |$vPad
         |${centered(italics(formatCreatedBy(resume.metadata.createdByLink)))}
         |$documentEnd
@@ -122,6 +122,14 @@ object Latex {
 
     private def formatCert(rec: EducationRecord): String =
       s"${link(bold(rec.instituion), rec.link)} - ${rec.awarded}: ${rec.proof}"
+
+    private def formatExtraElement(element: Element) =
+      element.contentChunks
+        .map {
+          case Link(text, url) => link(text, url)
+          case a               => a
+        }
+        .mkString(" ")
 
     private def formatHeader(h: Header) = {
       raw"""${section(h.name)}

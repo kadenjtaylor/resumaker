@@ -85,7 +85,10 @@ object Main extends IOApp.Simple {
       )
     ),
     Extras(
-      Element("Runner-up on The FOX network gameshow, `Superhuman`"),
+      Element(
+        "Runner-up on The FOX network gameshow,",
+        Link("SuperHuman", "https://www.youtube.com/watch?v=t65mzlOCDF8")
+      ),
       Element(
         "Received the Startup Tucson Award at UA Hackathon 2015 for designing an app for the Pebble Smartwatch"
       ),
