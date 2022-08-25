@@ -102,11 +102,11 @@ object Latex {
         |${resume.header.tagline}
         |$newline
         |
-        |${resume.header.location}
-        |
-        |${resume.header.contactInfo.email}
-        |
-        |${resume.header.contactInfo.phoneNumber}
+        |${bold("Location:")} ${resume.header.location} /  ${bold(
+         "Email:"
+       )} ${resume.header.contactInfo.email} / ${bold(
+         "Phone:"
+       )} ${resume.header.contactInfo.phoneNumber}
         |
         |$horizLine
         |

@@ -25,7 +25,7 @@ object Main extends IOApp.Simple {
         Job(
           "Software Engineer",
           "Member of the Platform Team",
-          "Scala (cats/zio)",
+          "Scala (cats-effect/Zio)",
           "Kubernetes",
           "Docker"
         )
@@ -44,12 +44,18 @@ object Main extends IOApp.Simple {
         "Usercare Inc",
         "Startup in Tucson, Arizona",
         Job("Fly.me - Software Engineer", "Online Travel Agency", "Clojure"),
-        Job("Agent.AI - Software Engineer", "Chatbot as a Service", "Java", "Neo4j")
+        Job("Agent.AI - Software Engineer", "Chatbots as a Service", "Java", "Neo4j")
       ),
       Workplace(
         "Amadeus Revenue Integrity",
         "Various Flight-Firming Products",
-        Job("Software Engineer", "Domin Model Sculpting", "Java", "RabbitMQ", "Dropwizard"),
+        Job(
+          "Software Engineer",
+          "Domin Model Sculpting, Various Product Work",
+          "Java",
+          "RabbitMQ",
+          "Dropwizard"
+        ),
         Job("Software R+D Intern", "Fun research stuff", "APL", "Ansible", "Consul", "Fabio")
       )
     ),
@@ -62,7 +68,7 @@ object Main extends IOApp.Simple {
       EducationRecord(
         "Gilbert High School",
         2012,
-        ProofOfEducation.Diploma
+        ProofOfEducation.Diploma("General Studies")
       )
     ),
     Extras(

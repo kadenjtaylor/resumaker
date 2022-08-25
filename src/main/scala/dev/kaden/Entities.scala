@@ -27,7 +27,7 @@ object Entities {
   type Year = Int
 
   enum ProofOfEducation:
-    case Diploma
+    case Diploma(areaOfStudy: String)
     case Degree(areaOfStudy: String)
     case Certification
 

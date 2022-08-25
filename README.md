@@ -2,7 +2,7 @@
 
 Tool for building up a resume using Scala, then invoking LaTeX to compile it into a presentable PDF.
 
-## Run application
+## Running the application
 
 ```shell
 sbt run
@@ -10,7 +10,11 @@ sbt run
 
 Then check the configured output directory (ex: `latex/`) for your PDF resume!
 
+## Working on the Resume
 
-# Extras:
-- Look into this for more formatting stuff: https://tex.stackexchange.com/questions/60209/how-to-add-an-extra-level-of-sections-with-headings-below-subsubsection
-- Understand different document classes and how to use them
+Pull up the compiled pdf in a tab, and run
+
+```shell
+sbt ~run
+```
+and watch the pdf update on save.
