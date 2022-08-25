@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 object Main extends IOApp.Simple {
 
-  def run: IO[Unit] = Latex.compile(kadenResume, filename = "kaden_taylor_resume")
+  def run: IO[Unit] = Latex.compile(kadenResume, fileName = "kaden_taylor_resume")
 
   val kadenResume = Resume(
     Header(
@@ -22,30 +22,34 @@ object Main extends IOApp.Simple {
     Experience(
       Workplace(
         "Axoni",
+        "https://axoni.com",
         "Fin-tech startup specializing in 'Distributed Ledger Technology'",
         Tenure(LocalDate.of(2021, 6, 1), LocalDate.of(2022, 7, 1)),
         Job(
           "Software Engineer",
           "Member of the Platform Team",
-          "Scala (Cats-Effect, ZIO, HTTP4s, doobie)",
+          "Scala (Cats-Effect, ZIO, HTTP4s, Doobie)",
           "Kubernetes",
           "Docker"
         )
       ),
       Workplace(
         "Academia.edu",
+        "https://academia.edu",
         "Short-form academic publishing: `Academia Letters`",
         Tenure(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 6, 1)),
         Job("Software Engineer", "Full-Stack Development", "Ruby on Rails", "Javascript")
       ),
       Workplace(
         "Google",
+        "https://google.com",
         "Android Messages Team",
         Tenure(LocalDate.of(2019, 10, 1), LocalDate.of(2020, 11, 1)),
         Job("Software Engineer", "Client-Side - Android Messages App", "Java", "Blaze")
       ),
       Workplace(
         "Usercare Inc",
+        "https://www.crunchbase.com/organization/usercare",
         "Startup in Tucson, Arizona",
         Tenure(LocalDate.of(2017, 8, 1), LocalDate.of(2019, 7, 1)),
         Job("Fly.me - Software Engineer", "Online Travel Agency", "Clojure"),
@@ -53,6 +57,7 @@ object Main extends IOApp.Simple {
       ),
       Workplace(
         "Amadeus Revenue Integrity",
+        "https://amadeus.com/en/portfolio/airlines/revenue-integrity",
         "Various Flight-Firming Products",
         Tenure(LocalDate.of(2016, 3, 1), LocalDate.of(2017, 8, 1)),
         Job(
@@ -68,11 +73,13 @@ object Main extends IOApp.Simple {
     Education(
       EducationRecord(
         "University of Arizona",
+        "https://www.cs.arizona.edu/",
         2016,
         ProofOfEducation.Degree("B.S. Computer Science")
       ),
       EducationRecord(
         "Gilbert High School",
+        "https://www.gilbertschools.net/gilberthigh",
         2012,
         ProofOfEducation.Diploma("General Studies")
       )
@@ -86,7 +93,7 @@ object Main extends IOApp.Simple {
         "Got fed up with using Indeed's autoformatted resume so I wrote some Scala code to generate the required LaTeX instead"
       )
     ),
-    Metadata("Created via: https://github.com/kadenjtaylor/resumaker")
+    Metadata("https://github.com/kadenjtaylor/resumaker")
   )
 
 }

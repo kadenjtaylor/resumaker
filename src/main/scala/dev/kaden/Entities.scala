@@ -34,7 +34,7 @@ object Entities {
     }
   }
 
-  case class Workplace(name: String, blurb: String, tenure: Tenure, jobs: Job*)
+  case class Workplace(name: String, link: String, blurb: String, tenure: Tenure, jobs: Job*)
 
   type Year = Int
 
@@ -43,14 +43,19 @@ object Entities {
     case Degree(areaOfStudy: String)
     case Certification(topic: String)
 
-  case class EducationRecord(instituion: String, awarded: Year, proof: ProofOfEducation)
+  case class EducationRecord(
+      instituion: String,
+      link: String,
+      awarded: Year,
+      proof: ProofOfEducation
+  )
 
   case class Element(content: String)
 
   case class Experience(workplaces: Workplace*)
   case class Education(certifcations: EducationRecord*)
   case class Extras(elements: Element*)
-  case class Metadata(attribution: String)
+  case class Metadata(createdByLink: String)
 
   case class Resume(
       header: Header,
