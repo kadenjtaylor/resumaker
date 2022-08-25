@@ -156,7 +156,7 @@ object Latex {
       val formattedDate = f.creationDate.format(
         DateTimeFormatter.ofLocalizedDate(FormatStyle.FULL)
       )
-      raw"Generated on ${centered(italics(formattedDate))} via:"
+      centered(raw"Generated on ${italics(formattedDate)} via:")
     }
 
     private def formatCreationLink(f: Footer): String = {
