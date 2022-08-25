@@ -26,8 +26,8 @@ object Main extends IOApp.Simple {
       ),
       Workplace(
         "Academia.edu",
-        "Experiment in short-form publishing: Academia Letters",
-        Job("Software Engineer", "Did some Ruby on Rails and some JS")
+        "Experiment in short-form academic publishing: `Academia Letters`",
+        Job("Software Engineer", "Ruby on Rails and some JS")
       ),
       Workplace(
         "Google",
@@ -51,7 +51,7 @@ object Main extends IOApp.Simple {
       EducationRecord(
         "University of Arizona",
         2016,
-        ProofOfEducation.Degree("Computer Science - B.S.")
+        ProofOfEducation.Degree("B.S. Computer Science")
       ),
       EducationRecord(
         "Gilbert High School",

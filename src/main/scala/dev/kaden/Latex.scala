@@ -55,15 +55,24 @@ object Latex {
 
   private def section(name: String) = raw"""\section*{$name}"""
 
+  private def formatJob(j: Job): String =
+    s"${j.title} - ${j.description}"
+
+  private def formatJobs(jobs: Seq[Job]): String =
+    beginList + jobs
+      .map(formatJob)
+      .map(itemOf)
+      .mkString("\n") + endList
+
   private def formatWorkplace(w: Workplace): String =
-    s"""${bold(w.name)}: ${w.blurb} $newline ${w.jobs}"""
+    s"""${bold(w.name)}: ${w.blurb} ${formatJobs(w.jobs)}"""
 
   private def formatExperience(workplaces: Seq[Workplace]): String =
     beginList +
       workplaces
         .map(formatWorkplace)
         .map(itemOf)
-        .mkString("\n" + newline + "\n" + newline) + endList
+        .mkString("\n") + endList
 
   private def formatCert(rec: EducationRecord): String =
     s"${bold(rec.instituion)} - ${rec.awarded}: ${rec.proof}"
@@ -72,13 +81,13 @@ object Latex {
     beginList + certifcations
       .map(formatCert)
       .map(itemOf)
-      .mkString(newline + "\n" + newline + "\n") + endList
+      .mkString("\n") + endList
 
   private def formatExtras(extras: Seq[Element]): String =
     beginList + extras
       .map(_.content)
       .map(itemOf)
-      .mkString(newline + "\n" + newline + "\n") + endList
+      .mkString("\n") + endList
 
   private def centered(text: String) = raw"\centering{$text}"
 
@@ -86,17 +95,11 @@ object Latex {
 
   def convertToLatex(resume: Resume): IO[String] = IO {
     s"""|$documentClass
-        |
         |$plainPage
-        |
         |$importGeo
-        |
         |$setGeometry
-        |
         |$documentBegin
-        |
         |${section(resume.header.name)}
-        |
         |${resume.header.tagline}
         |$newline
         |
