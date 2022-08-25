@@ -3,6 +3,7 @@ package dev.kaden
 import cats.effect.IOApp
 import cats.effect.IO
 import dev.kaden.Entities.*
+import java.time.LocalDate
 
 object Main extends IOApp.Simple {
 
@@ -22,6 +23,7 @@ object Main extends IOApp.Simple {
       Workplace(
         "Axoni",
         "Fin-tech startup specializing in 'Distributed Ledger Technology'",
+        Tenure(LocalDate.of(2021, 6, 1), LocalDate.of(2022, 7, 1)),
         Job(
           "Software Engineer",
           "Member of the Platform Team",
@@ -32,23 +34,27 @@ object Main extends IOApp.Simple {
       ),
       Workplace(
         "Academia.edu",
-        "Experiment in short-form academic publishing: `Academia Letters`",
+        "Short-form academic publishing: `Academia Letters`",
+        Tenure(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 6, 1)),
         Job("Software Engineer", "Full-Stack Development", "Ruby on Rails", "Javascript")
       ),
       Workplace(
         "Google",
         "Member of the Android Messages Team",
-        Job("Software Engineer", "Client-Side of Android Messages App", "Java", "Blaze")
+        Tenure(LocalDate.of(2019, 10, 1), LocalDate.of(2020, 11, 1)),
+        Job("Software Engineer", "Client-Side - Android Messages App", "Java", "Blaze")
       ),
       Workplace(
         "Usercare Inc",
         "Startup in Tucson, Arizona",
+        Tenure(LocalDate.of(2017, 8, 1), LocalDate.of(2019, 7, 1)),
         Job("Fly.me - Software Engineer", "Online Travel Agency", "Clojure"),
         Job("Agent.AI - Software Engineer", "Chatbots as a Service", "Java", "Neo4j")
       ),
       Workplace(
         "Amadeus Revenue Integrity",
         "Various Flight-Firming Products",
+        Tenure(LocalDate.of(2016, 3, 1), LocalDate.of(2017, 8, 1)),
         Job(
           "Software Engineer",
           "Domin Model Sculpting, Various Product Work",

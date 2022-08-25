@@ -1,5 +1,7 @@
 package dev.kaden
 
+import java.time.LocalDate
+
 object Entities {
 
   case class PhoneNumber(areaCode: Int, prefix: Int, suffix: Int) {
@@ -22,14 +24,24 @@ object Entities {
 
   case class Job(title: String, description: String, skills: String*)
 
-  case class Workplace(name: String, blurb: String, jobs: Job*)
+  case class Tenure(start: LocalDate, end: LocalDate) {
+    private def niceFormat(ld: LocalDate) = {
+      s"${ld.getMonth().toString().toLowerCase().capitalize} '${ld.getYear() % 100}"
+    }
+
+    override def toString(): String = {
+      s"(${niceFormat(start)} - ${niceFormat(end)})"
+    }
+  }
+
+  case class Workplace(name: String, blurb: String, tenure: Tenure, jobs: Job*)
 
   type Year = Int
 
   enum ProofOfEducation:
     case Diploma(areaOfStudy: String)
     case Degree(areaOfStudy: String)
-    case Certification
+    case Certification(topic: String)
 
   case class EducationRecord(instituion: String, awarded: Year, proof: ProofOfEducation)
 

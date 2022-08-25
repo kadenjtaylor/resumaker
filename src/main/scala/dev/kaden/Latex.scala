@@ -68,7 +68,7 @@ object Latex {
       .mkString("\n") + endList
 
   private def formatWorkplace(w: Workplace): String =
-    s"""${bold(w.name)}: ${w.blurb} ${formatJobs(w.jobs)}"""
+    s"""${bold(w.name)} {${w.tenure}}: ${w.blurb} ${formatJobs(w.jobs)}"""
 
   private def formatExperience(workplaces: Seq[Workplace]): String =
     beginList +
