@@ -7,7 +7,7 @@ import java.time.LocalDate
 
 object Main extends IOApp.Simple {
 
-  def run: IO[Unit] = Latex.compile(kadenResume)
+  def run: IO[Unit] = Latex.compile(kadenResume, filename = "kaden_taylor_resume")
 
   val kadenResume = Resume(
     Header(

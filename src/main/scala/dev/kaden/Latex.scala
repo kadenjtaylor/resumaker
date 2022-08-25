@@ -11,8 +11,8 @@ object Latex {
 
   def compile(
       resume: Resume,
-      directoryName: String = "latex/",
-      filename: String = "resume"
+      filename: String = "resume",
+      directoryName: String = "latex/"
   ): IO[Unit] = for {
     texFileName <- IO.pure(s"$directoryName$filename.tex")
     _           <- log("Converting to LaTeX...")
