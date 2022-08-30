@@ -137,10 +137,26 @@ object Latex {
         }
         .mkString(" ")
 
-    private def locationContactBanner(h: Header) =
-      raw"""${bold("Location:")} ${h.location} /
-      |${bold("Email:")} ${h.contactInfo.email} /
-      |${bold("Phone:")} ${h.contactInfo.phoneNumber}"""
+    private def locationLink(loc: Location) = {
+      val query        = s"${loc.city.capitalize}+${loc.state.abbrev.toUpperCase()}"
+      val locationLink = s"https://www.google.com/maps/search/?api=1&query=$query"
+      link(loc.toString(), locationLink)
+    }
+
+    private def emailLink(email: EmailAddress) = {
+      link(email.toString(), s"mailto:$email")
+    }
+
+    private def callLink(num: PhoneNumber) = {
+      val digits = s"${num.areaCode}${num.prefix}${num.suffix}"
+      link(num.toString(), s"tel:$digits")
+    }
+
+    private def locationContactBanner(h: Header) = {
+      raw"""${bold("Location:")} ${locationLink(h.location)} /
+      |${bold("Email:")} ${emailLink(h.contactInfo.email)} /
+      |${bold("Phone:")} ${callLink(h.contactInfo.phoneNumber)}"""
+    }
 
     private def formatHeader(h: Header) = {
       raw"""${section(h.name)}
