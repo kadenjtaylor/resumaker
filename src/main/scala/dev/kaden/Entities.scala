@@ -24,14 +24,17 @@ object Entities {
 
   case class Job(title: String, description: String, skills: String*)
 
-  case class Tenure(start: LocalDate, end: LocalDate) {
+  enum Tenure {
+    case Past(start: LocalDate, end: LocalDate)
+    case Present(start: LocalDate)
+
     private def niceFormat(ld: LocalDate) = {
       s"${ld.getMonth().toString().toLowerCase().capitalize} '${ld.getYear() % 100}"
     }
 
-    override def toString(): String = {
-      s"(${niceFormat(start)} - ${niceFormat(end)})"
-    }
+    override def toString(): String = this match
+      case Tenure.Past(start, end) => s"(${niceFormat(start)} - ${niceFormat(end)})"
+      case Tenure.Present(start)   => s"(${niceFormat(start)} - Present)"
   }
 
   case class Workplace(name: String, link: String, blurb: String, tenure: Tenure, jobs: Job*)

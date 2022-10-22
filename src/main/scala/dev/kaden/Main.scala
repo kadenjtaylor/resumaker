@@ -4,6 +4,7 @@ import cats.effect.IOApp
 import cats.effect.IO
 import dev.kaden.Entities.*
 import java.time.LocalDate
+import dev.kaden.Entities.Tenure.*
 
 object Main extends IOApp.Simple {
 
@@ -21,10 +22,17 @@ object Main extends IOApp.Simple {
     ),
     Experience(
       Workplace(
+        "Crunchbase",
+        "https://crunchbase.com",
+        "Discovery Team",
+        Present(LocalDate.of(2022, 9, 26)),
+        Job("Platform Engineer", "Backend Functional scala", "Scala", "http4s")
+      ),
+      Workplace(
         "Axoni",
         "https://axoni.com",
         "Fin-tech startup specializing in 'Distributed Ledger Technology'",
-        Tenure(LocalDate.of(2021, 6, 1), LocalDate.of(2022, 7, 1)),
+        Past(LocalDate.of(2021, 6, 1), LocalDate.of(2022, 7, 1)),
         Job(
           "Software Engineer",
           "Member of the Platform Team",
@@ -37,21 +45,21 @@ object Main extends IOApp.Simple {
         "Academia.edu",
         "https://academia.edu",
         "Short-form academic publishing: `Academia Letters`",
-        Tenure(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 6, 1)),
+        Past(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 6, 1)),
         Job("Software Engineer", "Full-Stack Development", "Ruby on Rails", "Javascript")
       ),
       Workplace(
         "Google",
         "https://google.com",
         "Android Messages Team",
-        Tenure(LocalDate.of(2019, 10, 1), LocalDate.of(2020, 11, 1)),
+        Past(LocalDate.of(2019, 10, 1), LocalDate.of(2020, 11, 1)),
         Job("Software Engineer", "Client-Side - Android Messages App", "Java", "Blaze")
       ),
       Workplace(
         "Usercare Inc",
         "https://www.crunchbase.com/organization/usercare",
         "Startup in Tucson, Arizona",
-        Tenure(LocalDate.of(2017, 8, 1), LocalDate.of(2019, 7, 1)),
+        Past(LocalDate.of(2017, 8, 1), LocalDate.of(2019, 7, 1)),
         Job("Fly.me - Software Engineer", "Online Travel Agency", "Clojure"),
         Job("Agent.AI - Software Engineer", "Chatbots as a Service", "Java", "Neo4j")
       ),
@@ -59,7 +67,7 @@ object Main extends IOApp.Simple {
         "Amadeus Revenue Integrity",
         "https://amadeus.com/en/portfolio/airlines/revenue-integrity",
         "Various Flight-Firming Products",
-        Tenure(LocalDate.of(2016, 3, 1), LocalDate.of(2017, 8, 1)),
+        Past(LocalDate.of(2016, 3, 1), LocalDate.of(2017, 8, 1)),
         Job(
           "Software Engineer",
           "Domin Model Sculpting, Various Product Work",
