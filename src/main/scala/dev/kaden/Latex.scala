@@ -23,13 +23,13 @@ object Latex {
       _           <- log("Invoking LaTeX...")
       response    <- invokeLatexOn(dirName, texFileName).attempt
       _ <- response match {
-        case Left(err) => reportError(dirName, fileName)
+        case Left(err) => reportError(err.toString())
         case Right(_)  => reportSuccess(dirName, fileName)
       }
     } yield ()
 
-  private def reportError(directoryName: String, filename: String): IO[Unit] =
-    log(s"Encountered error in compiling LaTex - see $directoryName$filename.log for details")
+  private def reportError(errorMsg: String): IO[Unit] =
+    log(s"Encountered error in compiling LaTex:") *> log(errorMsg)
 
   private def reportSuccess(directoryName: String, filename: String): IO[Unit] =
     log(s"Success! Your PDF should be located at: $directoryName$filename.pdf")

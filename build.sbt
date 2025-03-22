@@ -1,5 +1,5 @@
 ThisBuild / organization := "com.example"
-ThisBuild / scalaVersion := "3.1.3"
+ThisBuild / scalaVersion := "3.6.4"
 
 lazy val root = (project in file(".")).settings(
   name := "resumaker",

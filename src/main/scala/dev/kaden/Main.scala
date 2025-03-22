@@ -18,14 +18,14 @@ object Main extends IOApp.Simple {
         PhoneNumber(480, 734, 8791),
         EmailAddress("kadenjtaylor", "gmail.com")
       ),
-      Location("Burien", State("Washington", "WA"))
+      Location("Tucson", State("Arizona", "AZ"))
     ),
     Experience(
       Workplace(
         "Crunchbase",
         "https://crunchbase.com",
         "Discovery Team",
-        Present(LocalDate.of(2022, 9, 26)),
+        Past(LocalDate.of(2022, 9, 26), LocalDate.of(2025, 2, 24)),
         Job("Platform Engineer", "Backend Functional scala", "Scala", "http4s")
       ),
       Workplace(
