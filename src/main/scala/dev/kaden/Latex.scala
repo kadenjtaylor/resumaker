@@ -52,8 +52,11 @@ object Latex {
     bw.close()
   }
 
+  // TODO: This is fragile - if Latex missing/incomplete, this goes poorly, quietly
   private def invokeLatexOn(directory: String, filename: String): IO[String] = IO {
-    s"latex -halt-on-error -output-directory=$directory -output-format=pdf $filename".!!
+    val command = s"latex -halt-on-error -output-directory=$directory -output-format=pdf $filename"
+    println(command)
+    command.!!
   }
 
   object LatexUtils {
