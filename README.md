@@ -2,6 +2,11 @@
 
 Tool for building up a resume using Scala, then invoking LaTeX to compile it into a presentable PDF.
 
+## Prerequisites
+```shell
+ sudo apt install texlive-latex-extra
+```
+
 ## Running the application
 
 ```shell
