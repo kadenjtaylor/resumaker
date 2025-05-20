@@ -1,3 +1,6 @@
+![logo](resumaker_icon.png)
+
+
 # Resu-Maker
 
 Tool for building up a resume using Scala, then invoking LaTeX to compile it into a presentable PDF.
