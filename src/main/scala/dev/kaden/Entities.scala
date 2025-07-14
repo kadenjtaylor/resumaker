@@ -22,7 +22,12 @@ object Entities {
 
   case class Header(name: String, tagline: String, contactInfo: ContactInfo, location: Location)
 
-  case class Job(title: String, description: String, skills: String*)
+  case class SoftwareJob(
+      title: String,
+      description: String,
+      skillsAndTools: List[String],
+      langsAndLibs: Map[String, List[String]]
+  )
 
   enum Tenure {
     case Past(start: LocalDate, end: LocalDate)
@@ -37,7 +42,13 @@ object Entities {
       case Tenure.Present(start)   => s"(${niceFormat(start)} - Present)"
   }
 
-  case class Workplace(name: String, link: String, blurb: String, tenure: Tenure, jobs: Job*)
+  case class Workplace(
+      name: String,
+      link: String,
+      blurb: String,
+      tenure: Tenure,
+      jobs: SoftwareJob*
+  )
 
   type Year = Int
 
@@ -45,6 +56,11 @@ object Entities {
     case Diploma(areaOfStudy: String)
     case Degree(areaOfStudy: String)
     case Certification(topic: String)
+
+    override def toString(): String = this match
+      case Diploma(areaOfStudy) => areaOfStudy
+      case Degree(areaOfStudy)  => areaOfStudy
+      case Certification(topic) => topic
 
   case class EducationRecord(
       instituion: String,

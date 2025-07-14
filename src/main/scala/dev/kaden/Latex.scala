@@ -87,7 +87,7 @@ object Latex {
     }
 
     private val plainPage     = raw"\pagestyle{empty}"
-    private val setIndent     = raw"\setlength{\parindent}{0pt}"
+    private val setIndent     = raw"\setlength{\parindent}{1cm}"
     private val setParSkip    = raw"\setlength{\parskip}{0pt}"
     private val documentClass = raw"\documentclass{article}"
     private val documentBegin = raw"\begin{document}"
@@ -122,9 +122,19 @@ object Latex {
       raw"\href{$url}{$text}"
     private def url(url: String) = raw"\url{$url}"
 
-    private def formatJob(j: Job): String =
-      s"${bold(j.title)} - ${j.description}" +
-        s"$newline ${italics(j.skills.mkString(", "))}"
+    private def prettyLangsAndLibs(langLibMap: Map[String, List[String]]) =
+      langLibMap
+        .map((k, vs) => if vs.isEmpty then k else s"$k: [${italics(vs.mkString(", "))}]")
+        .mkString(" / ")
+
+    private def prettySkillsAndTools(skillsAndTools: List[String]) =
+      if skillsAndTools.isEmpty then "" else s"(${italics(skillsAndTools.mkString(", "))})"
+
+    private def formatJob(j: SoftwareJob): String =
+      j match
+        case SoftwareJob(title, description, skillsAndTools, langsAndLibs) =>
+          s"${bold(title)} - ${description} ${{ prettySkillsAndTools(skillsAndTools) }}" +
+            s"$newline ${prettyLangsAndLibs(langsAndLibs)}"
 
     private def formatWorkplace(w: Workplace): String =
       s"""${link(bold(w.name), w.link)} {${w.tenure}}: ${w.blurb} ${listOf(w.jobs, formatJob)}"""
