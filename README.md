@@ -26,7 +26,3 @@ Pull up the compiled pdf in a tab, and run
 sbt ~run
 ```
 and watch the pdf update on save.
-
-# TODOs
- - Organize technical skills section better
-  - Differentiate between programming languages, libraries, tools
