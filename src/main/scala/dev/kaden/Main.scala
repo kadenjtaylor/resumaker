@@ -88,7 +88,7 @@ object Main extends IOApp.Simple {
     Past(LocalDate.of(2016, 3, 1), LocalDate.of(2017, 8, 1)),
     SoftwareJob(
       "Software Engineer",
-      "Domin Modeling, Optimization",
+      "Domain Modeling, Optimization",
       List("RabbitMQ"),
       Map("Java" -> List("Dropwizard", "Guice"))
     ),
